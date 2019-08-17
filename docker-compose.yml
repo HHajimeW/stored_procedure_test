@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+    db:   
+        build: ./docker/mysql
+        image: mysql:5.7
+        restart: always
+        volumes:
+            - ./db/mysql_data:/var/lib/mysql
+        environment:
+            MYSQL_HOST: 127.0.0.1
+            MYSQL_USER: user
+            MYSQL_PORT: 3306
+            MYSQL_PASSWORD: password
+            MYSQL_ROOT_PASSWORD: rootpassword
+            MYSQL_DATABASE: stored_procedure_db
+        ports:
+            - '3306:3306'
+        volumes:
+            - ./docker/mysql/initdb.d:/docker-entrypoint-initdb.d
+            - ./docker/mysql/conf.d:/etc/mysql/conf.d
+            - ./db/mysql_data:/var/log/mysql
